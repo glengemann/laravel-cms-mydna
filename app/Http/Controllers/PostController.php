@@ -4,44 +4,56 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostCollection;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $posts = Post::all();
+
+        return response()
+            ->json(new PostCollection($posts), Response::HTTP_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request): JsonResponse
     {
-        //
+        $post = Post::create($request->validated());
+
+        return response()
+            ->json(new PostResource($post), Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Post $post)
+    public function show(Post $post): JsonResponse
     {
-        //
+        $post->load('category', 'comments', 'labels');
+
+        return response()
+            ->json(new PostResource($post), Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post): JsonResponse
     {
-        //
+        $post->update($request->validated());
+
+        return response()
+            ->json(new PostResource($post), Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Post $post)
+    public function destroy(Post $post): JsonResponse
     {
-        //
+        try {
+            $post->delete();
+        } catch (\Throwable $t) {
+            return response()
+                ->json(['message' => $t->getMessage()], Response::HTTP_CONFLICT);
+        }
+
+        return response()
+            ->json(null, Response::HTTP_NO_CONTENT);
     }
 }
