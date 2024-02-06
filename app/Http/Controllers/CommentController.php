@@ -4,47 +4,49 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentCollection;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $comments = Comment::all();
+
+        return response()
+            ->json(new CommentCollection($comments), Response::HTTP_OK);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request): JsonResponse
     {
-        //
+        $comment = Comment::create($request->validated());
+
+        return response()
+            ->json($comment, Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
+    public function show(Comment $comment): JsonResponse
     {
-        //
+        return response()
+            ->json(new CommentResource($comment), Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function update(UpdateCommentRequest $request, Comment $comment): JsonResponse
     {
-        //
+        $comment->update($request->validated());
+
+        return response()
+            ->json(new CommentResource($comment), Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment): JsonResponse
     {
-        //
+        $comment->delete();
+
+        return response()
+            ->json(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -100,6 +100,100 @@ paths:
           description: Category resource deleted
         409:
           description: Conflict
+  /api/comments:
+    get:
+      tags:
+        - Comments
+      summary: Get all comments
+      responses:
+        '200':
+          description: A list of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+    post:
+      tags:
+        - Comments
+      summary: Create a new comment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          description: Comment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        422:
+          description: Unprocessable entity/content
+  /api/comments/{id}:
+    get:
+      tags:
+        - Comments
+      summary: Get a comment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the comment
+      responses:
+        '200':
+          description: A comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Comment not found
+    patch:
+      tags:
+        - Comments
+      summary: Update a comment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the comment
+      responses:
+        '200':
+          description: Comment resource updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Comment not found
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+    delete:
+      tags:
+        - Comments
+      summary: Delete a comment by ID
+      parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+                type: integer
+            description: The ID of the comment
+      responses:
+        '204':
+          description: Comment resource deleted
 components:
   schemas:
     Category:
@@ -114,3 +208,18 @@ components:
         name:
           type: string
           example: "Rock"
+    Comment:
+      type: object
+      description: A comment
+      deprecated: false
+      properties:
+        id:
+          readOnly: true
+          type: integer
+          example: 1
+        content:
+          type: string
+          example: "This is a comment"
+        post_id:
+          type: integer
+          example: 1
