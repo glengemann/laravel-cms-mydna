@@ -319,6 +319,10 @@ components:
         post_id:
           type: integer
           example: 1
+        status:
+          type: string
+          required: false
+          example: "approved"
     Post:
       type: object
       description: A post

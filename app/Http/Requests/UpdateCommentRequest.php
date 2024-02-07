@@ -19,6 +19,7 @@ class UpdateCommentRequest extends FormRequest
         return [
             'content' => ['required', 'string', 'max:255'],
             'post_id' => ['required', 'exists:posts,id'],
+            'status' => ['in:pending,approved,rejected'],
         ];
     }
 }

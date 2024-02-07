@@ -14,7 +14,10 @@ class PostController extends Controller
 {
     public function index(): JsonResponse
     {
-        $posts = Post::all();
+        $posts = Post::query()
+            ->limit(4)
+            ->get()
+        ;
 
         return response()
             ->json(new PostCollection($posts), Response::HTTP_OK);
