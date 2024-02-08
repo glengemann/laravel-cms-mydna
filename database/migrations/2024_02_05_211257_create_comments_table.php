@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId('post_id')->constrained();
             $table->string('status')->default(CommentStatus::PENDING->value);
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
