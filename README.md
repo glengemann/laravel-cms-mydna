@@ -16,7 +16,7 @@ php -S 127.0.0.1:14001 -t docs/
 4. API Restful 
    - CRUD: posts, categories, and comments ✅
    - Authentication via token
-5. Search and filter
+5. Search and filter posts and categories
 6. i18n
 
 ## Non-functional requirements

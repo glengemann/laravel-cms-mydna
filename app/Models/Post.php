@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Post extends Model
 {
+    use FilterTrait;
     use HasFactory;
 
     protected $guarded = [];

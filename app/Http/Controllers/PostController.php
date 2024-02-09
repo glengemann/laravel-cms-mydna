@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndexPostRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\ValueObjects\Filter;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
@@ -12,12 +14,15 @@ use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(IndexPostRequest $request): JsonResponse
     {
+        /** @var Filter[] $filters */
+        $filters = $request->filters();
+
         $posts = Post::query()
-            ->limit(4)
-            ->get()
-        ;
+            ->applyFilter($filters)
+            ->limit(10)
+            ->get();
 
         return response()
             ->json(new PostCollection($posts), Response::HTTP_OK);

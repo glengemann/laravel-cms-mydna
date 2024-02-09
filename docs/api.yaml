@@ -199,6 +199,43 @@ paths:
       tags:
         - Posts
       summary: Get all posts
+      parameters:
+        - name: title[partial]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The title contain the given string
+        - name: title[start]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The start of the title
+        - name: title[end]
+          in: query
+          required: false
+          schema:
+              type: string
+          description: The end of the title
+        - name: content[partial]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The content contain the given string
+        - name: content[start]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The start of the title
+        - name: content[end]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The end of the title
       responses:
         '200':
           description: A list of posts
