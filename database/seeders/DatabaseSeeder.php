@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Label;
@@ -13,6 +14,16 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        User::factory()->create([
+            'email' => 'admin@cms.com',
+            'role' => Role::ADMIN->value,
+        ]);
+
+        User::factory()->create([
+            'email' => 'editor@cms.com',
+            'role' => Role::ADMIN->value,
+        ]);
+
         User::factory(10)->create();
 
         Category::factory(10)->create()->each(function ($category) {

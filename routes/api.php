@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
@@ -21,6 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login', [AuthController::class, 'logIn']);
+Route::post('/logout', [AuthController::class, 'logOut'])
+    ->middleware('auth:sanctum');
+
 Route::apiResource('/categories', CategoryController::class);
 Route::apiResource('/comments', CommentController::class);
-Route::apiResource('/posts', PostController::class);
+Route::apiResource('/posts', PostController::class)
+    ->middleware('auth:sanctum');

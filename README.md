@@ -7,6 +7,8 @@ php -S 127.0.0.1:14001 -t docs/
 # Requirements
 
 1. Authentication and Authorization
+   - Authentication
+   - Roles: admin, editor, and user ✅ 
    - Use policies and gates ✅
 
 2. Content Management System

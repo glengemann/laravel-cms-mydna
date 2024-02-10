@@ -6,6 +6,45 @@ servers:
   - url: http://localhost:14000
     description: CMS MyDNA
 paths:
+  /api/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 'admin@cms.com'
+                password:
+                  type: string
+                  example: 'password'
+      responses:
+        '204':
+          description: Login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: 'eyJhbGciOi'
+  /api/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout
+      responses:
+        '204':
+          description: Logout
+      security:
+        - BearerAuth: []
   /api/categories:
     get:
       tags:
@@ -199,6 +238,8 @@ paths:
       tags:
         - Posts
       summary: Get all posts
+      security:
+        - BearerAuth: []
       parameters:
         - name: title[partial]
           in: query
@@ -256,8 +297,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Post'
-        422:
+        '422':
           description: Unprocessable entity/content
+        '401':
+          description: Unauthorized
       requestBody:
           required: true
           content:
@@ -381,3 +424,8 @@ components:
           user_id:
             type: integer
             example: 1
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
