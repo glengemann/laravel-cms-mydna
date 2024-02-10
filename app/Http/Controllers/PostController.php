@@ -30,6 +30,8 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request): JsonResponse
     {
+        $this->authorize('store', Post::class);
+
         $post = Post::create($request->validated());
 
         return response()
@@ -46,6 +48,8 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post): JsonResponse
     {
+        $this->authorize('update', $post);
+
         $post->update($request->validated());
 
         return response()
@@ -54,6 +58,8 @@ class PostController extends Controller
 
     public function destroy(Post $post): JsonResponse
     {
+        $this->authorize('destroy', $post);
+
         try {
             $post->delete();
         } catch (\Throwable $t) {
