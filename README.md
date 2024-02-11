@@ -1,13 +1,7 @@
-# Documentation
-
-```bash
-php -S 127.0.0.1:14001 -t docs/
-```
-
 # Requirements
 
 1. Authentication and Authorization
-   - Authentication
+   - Authentication ✅
    - Roles: admin, editor, and user ✅ 
    - Use policies and gates ✅
 
@@ -20,7 +14,7 @@ php -S 127.0.0.1:14001 -t docs/
 
 4. API Restful 
    - CRUD: posts, categories, and comments ✅
-   - Authentication via token
+   - Authentication via token ✅
 
 5. Search and filter posts and categories ✅
 
@@ -33,6 +27,15 @@ php -S 127.0.0.1:14001 -t docs/
 3. PHPUnit ✅
 4. Documentation ✅
 5. Docker ✅
+
+# Documentation
+
+Run the following command to start the built-in PHP server and serve the documentation
+using OpenAPI (Swagger):
+
+```bash
+php -S 127.0.0.1:14001 -t docs/
+```
 
 ## Installation
 
