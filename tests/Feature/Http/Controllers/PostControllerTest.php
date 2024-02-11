@@ -49,7 +49,6 @@ class PostControllerTest extends TestCase
             'title' => 'Post Title',
             'content' => 'Post Content',
             'category_id' => $category->id,
-            'user_id' => $user->id,
         ]);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
@@ -64,7 +63,6 @@ class PostControllerTest extends TestCase
             'title' => 'Post Title',
             'content' => 'Post Content',
             'category_id' => $category->id,
-            'user_id' => $user->id,
         ]);
 
         $response->assertStatus(Response::HTTP_CREATED);
@@ -79,7 +77,6 @@ class PostControllerTest extends TestCase
             'title' => 'Post Title',
             'content' => 'Post Content',
             'category_id' => $category->id,
-            'user_id' => $user->id,
         ]);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);

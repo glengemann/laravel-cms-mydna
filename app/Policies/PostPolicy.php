@@ -9,7 +9,7 @@ class PostPolicy
 {
     public function store(User $user): bool
     {
-        return $user->isEditor();
+        return $user->isEditor() || $user->isAdmin();
     }
 
     public function update(User $user, Post $post): bool

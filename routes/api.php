@@ -28,5 +28,10 @@ Route::post('/logout', [AuthController::class, 'logOut'])
 
 Route::apiResource('/categories', CategoryController::class);
 Route::apiResource('/comments', CommentController::class);
+
 Route::apiResource('/posts', PostController::class)
-    ->middleware('auth:sanctum');
+    ->only('index', 'show');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('/posts', PostController::class)
+        ->only('store', 'update', 'destroy');
+});

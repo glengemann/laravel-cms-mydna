@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -20,6 +21,15 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            $post->user_id = Auth::id();
+        });
+    }
 
     public function category(): BelongsTo
     {
