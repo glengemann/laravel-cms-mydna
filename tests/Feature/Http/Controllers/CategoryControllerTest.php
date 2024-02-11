@@ -38,11 +38,11 @@ class CategoryControllerTest extends TestCase
 
     public function testNonAuthenticatedUserCanNotCreateCategory()
     {
-        $response = $this->post('/api/categories', [
+        $response = $this->postJson('/api/categories', [
             'name' => 'Category Name',
         ]);
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testAdminCanShowCategory()
@@ -60,7 +60,7 @@ class CategoryControllerTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->get("/api/categories/{$category->id}");
+        $response = $this->getJson("/api/categories/{$category->id}");
 
         $response->assertStatus(Response::HTTP_OK);
     }
@@ -82,14 +82,14 @@ class CategoryControllerTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->put("/api/categories/{$category->id}", [
+        $response = $this->putJson("/api/categories/{$category->id}", [
             'name' => 'Category Name',
         ]);
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
-    public function testAdminCanDeleteCategory(): void
+    public function testAdminCanDestroyCategory(): void
     {
         $user = User::factory()->create(['role' => 'admin']);
         $category = Category::factory()->create();
@@ -100,12 +100,12 @@ class CategoryControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
-    public function testNonAuthenticatedUserCanNotDeleteCategory(): void
+    public function testNonAuthenticatedUserCanNotDestroyCategory(): void
     {
         $category = Category::factory()->create();
 
-        $response = $this->delete("/api/categories/{$category->id}");
+        $response = $this->deleteJson("/api/categories/{$category->id}");
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }
