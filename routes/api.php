@@ -27,7 +27,15 @@ Route::post('/logout', [AuthController::class, 'logOut'])
     ->middleware('auth:sanctum');
 
 Route::apiResource('/categories', CategoryController::class);
-Route::apiResource('/comments', CommentController::class);
+
+Route::apiResource('/comments', CommentController::class)
+    ->only('index', 'show');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('/comments', CommentController::class)
+        ->only('store', 'update', 'destroy');
+    Route::patch('/comments/{comment}/status/{status}', [CommentController::class, 'status'])
+        ->name('comments.status');
+});
 
 Route::apiResource('/posts', PostController::class)
     ->only('index', 'show');

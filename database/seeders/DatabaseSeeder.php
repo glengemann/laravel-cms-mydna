@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
             'role' => Role::ADMIN->value,
         ]);
 
+        User::factory()->create([
+            'email' => 'guest@cms.com',
+            'role' => Role::GUEST->value,
+        ]);
+
         User::factory(10)->create();
 
         Category::factory(10)->create()->each(function ($category) {

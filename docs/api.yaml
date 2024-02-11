@@ -157,6 +157,8 @@ paths:
       tags:
         - Comments
       summary: Create a new comment
+      security:
+        - BearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -197,6 +199,8 @@ paths:
       tags:
         - Comments
       summary: Update a comment by ID
+      security:
+          - BearerAuth: [ ]
       parameters:
         - name: id
           in: path
@@ -223,6 +227,8 @@ paths:
       tags:
         - Comments
       summary: Delete a comment by ID
+      security:
+        - BearerAuth: [ ]
       parameters:
           - name: id
             in: path
@@ -233,6 +239,36 @@ paths:
       responses:
         '204':
           description: Comment resource deleted
+  /api/comments/{id}/status/{status}:
+    patch:
+      tags:
+        - Comments
+      summary: Update a comment status by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the comment
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [approved, rejected, pending]
+          description: The status of the comment
+      responses:
+        '200':
+          description: Comment resource updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Comment not found
   /api/posts:
     get:
       tags:
@@ -408,6 +444,7 @@ components:
           type: integer
           example: 1
         status:
+          readOnly: true
           type: string
           required: false
           example: "approved"
