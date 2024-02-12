@@ -1,6 +1,6 @@
 # Requirements
 
-1. Authentication and Authorization
+1. Authentication and Authorization ✅
    - Authentication ✅
    - Roles: admin, editor, and user ✅ 
    - Use policies and gates ✅
@@ -23,6 +23,7 @@
 ## Non-functional requirements
 
 1. Performance
+   - Cache ✅
 2. Security
 3. PHPUnit ✅
 4. Documentation ✅
