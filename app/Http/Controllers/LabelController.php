@@ -14,7 +14,9 @@ class LabelController extends Controller
 {
     public function index(): JsonResponse
     {
-        $labels = Label::all();
+        $labels = Label::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return response()
             ->json(new LabelCollection($labels), Response::HTTP_OK);

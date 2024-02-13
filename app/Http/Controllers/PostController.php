@@ -49,10 +49,13 @@ class PostController extends Controller
 
     public function comments(Post $post): JsonResponse
     {
-        $post->load('comments');
+        $comments = $post->comments()
+            ->approved()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return response()
-            ->json(new CommentCollection($post->comments), Response::HTTP_OK);
+            ->json(new CommentCollection($comments), Response::HTTP_OK);
     }
 
     public function update(UpdatePostRequest $request, Post $post): JsonResponse
