@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::apiResource('/posts', PostController::class)
     ->only('index', 'show');
+Route::get('/posts/{post}/comments', [PostController::class, 'comments']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/posts', PostController::class)
         ->only('store', 'update', 'destroy');

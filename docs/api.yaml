@@ -387,6 +387,29 @@ paths:
                 $ref: '#/components/schemas/Comment'
         '404':
           description: Comment not found
+  /api/posts/{id}/comments:
+    get:
+      tags:
+        - Posts
+      summary: Get comments for a post by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the post
+      responses:
+        '200':
+          description: A list of comments for the post
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Post not found
   /api/posts:
     get:
       tags:

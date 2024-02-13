@@ -6,6 +6,7 @@ use App\Http\Requests\IndexPostRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\ValueObjects\Filter;
+use App\Http\Resources\CommentCollection;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
@@ -21,7 +22,7 @@ class PostController extends Controller
 
         $posts = Post::query()
             ->applyFilter($filters)
-            ->limit(10)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return response()
@@ -44,6 +45,14 @@ class PostController extends Controller
 
         return response()
             ->json(new PostResource($post), Response::HTTP_OK);
+    }
+
+    public function comments(Post $post): JsonResponse
+    {
+        $post->load('comments');
+
+        return response()
+            ->json(new CommentCollection($post->comments), Response::HTTP_OK);
     }
 
     public function update(UpdatePostRequest $request, Post $post): JsonResponse
