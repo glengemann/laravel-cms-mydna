@@ -7,6 +7,13 @@ use Illuminate\Support\Collection;
 
 class CommentRepository
 {
+    public function findAll(): Collection
+    {
+        return Comment::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
     public function findApproved(): Collection
     {
         return Comment::query()

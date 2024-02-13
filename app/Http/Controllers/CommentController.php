@@ -16,7 +16,7 @@ class CommentController extends Controller
 {
     public function index(CommentRepository $repository): JsonResponse
     {
-        $comments = $repository->findApproved();
+        $comments = $repository->findAll();
 
         return response()
             ->json(new CommentCollection($comments), Response::HTTP_OK);
