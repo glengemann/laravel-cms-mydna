@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
@@ -57,3 +58,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/posts', PostController::class)
         ->only('store', 'update', 'destroy');
 });
+
+Route::post('upload', [FileUploadController::class, 'upload'])
+    ->middleware('auth:sanctum');
